@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core import views
+# !ONLY ON DEVELOPING ENVIRONMENT
+from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -24,3 +26,8 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('admin/', admin.site.urls),
 ]
+
+# Extended config for displaying media files on developing environment (ONLY IF DEBUG=True)
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
